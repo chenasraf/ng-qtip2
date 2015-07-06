@@ -32,7 +32,7 @@ qTip 2 directive for AngularJS.
 | qtipEvent | [optional] [string] [interpolated] [default=mouseover] | What event triggers the qTip to show up. |
 | qtipEventOut | [optional] [string] [interpolated] [default=mouseout] | What event triggers the qTip to hide after being shown. |
 | qtipMy | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
-| qtipAt | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
+| qtipAt | [optional] [string] [interpolated] [default=top center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 
 ## Contributing
 Feel free to create pull requests or request features for this.
