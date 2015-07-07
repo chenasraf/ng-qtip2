@@ -60,7 +60,7 @@ qTip 2 directive for AngularJS.
     <ul>
         <li ng-repeat="person in people track by $index"
             qtip="{{$index}}"
-            qtip-my="{{getQtipMy($index}}"
+            qtip-my="{{getQtipMy($index)}}"
             qtip-at="top {{$index > 15 ? 'center' : 'bottom'}}">
             {{person.name}}
         </li>
