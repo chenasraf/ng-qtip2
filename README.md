@@ -34,5 +34,36 @@ qTip 2 directive for AngularJS.
 | qtipMy | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 | qtipAt | [optional] [string] [interpolated] [default=top center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 
+## Examples
+#### 1. Regular qTip
+
+    <span qtip="Hi there, {{name}}!">{{name}}</span>
+    
+#### 2. Immediately visible qTip
+
+    <span qtip="Woah!" qtip-visible="true">{{name}}</span>
+    
+#### 3. qTip from template, with multiple objects
+
+    <span qtip qtip-template="my_remote_template.html" 
+          qtip-template-object="{person: myPerson, callback: myCallback}">
+        {{person.name}}
+    </span>
+    
+##### my_remote_template.html
+
+    <span ng-click="object.callback(person)">
+        Hi {{object.person.name}}, you are {{object.person.age | pluralize:'year'}} old!
+    </span>
+#### 4. Dynamic qTip position
+
+    <ul>
+    <li ng-repeat="person in people track by $index"
+        qtip="{{$index}}"
+        qtip-my="{{getQtipMy($index}}"
+        qtip-at="top {{$index > 15 ? 'center' : 'bottom'}}>
+        {{person.name}}
+    </li>
+
 ## Contributing
 Feel free to create pull requests or request features for this.
