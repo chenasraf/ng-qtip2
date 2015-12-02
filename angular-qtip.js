@@ -11,6 +11,7 @@
           qtipAdjustX: '=',
           qtipAdjustY: '=',
           qtip: '@',
+          qtipTipStyle: '=',
           qtipTitle: '@',
           qtipContent: '@',
           qtipSelector: '@',
@@ -22,7 +23,7 @@
           object: '=qtipTemplateObject'
         },
         link: function(scope, el, attrs) {
-          var adjustX, adjustY, at, content, delay, event, eventOut, fixed, generateQtip, my, qtipClass, string_to_bool;
+          var adjustX, adjustY, at, content, delay, event, eventOut, fixed, generateQtip, my, qtipClass, qtipTipStyle, string_to_bool;
           string_to_bool = function(str) {
             var ref;
             return !((ref = String(str).toLowerCase()) === 'false' || ref === '0' || ref === 'null');
@@ -30,6 +31,7 @@
           my = scope.qtipMy || 'bottom center';
           at = scope.qtipAt || 'top center';
           qtipClass = attrs.qtipClass || 'qtip';
+          qtipTipStyle = scope.qtipTipStyle || {};
           adjustX = parseInt(scope.qtipAdjustX) || 0;
           adjustY = parseInt(scope.qtipAdjustY) || 0;
           content = scope.qtipContent || scope.qtip;
@@ -37,6 +39,7 @@
           eventOut = scope.qtipEventOut || 'mouseout';
           fixed = scope.qtipFixed !== null ? string_to_bool(scope.qtipFixed) : true;
           delay = scope.qtipDelay || 100;
+
           generateQtip = function(content) {
             var options;
             options = {
@@ -58,7 +61,10 @@
                 delay: delay,
                 event: eventOut
               },
-              style: qtipClass
+              style: {
+                classes: qtipClass,
+                tip: qtipTipStyle
+              }
             };
             $(el).qtip(options);
             if (attrs.qtipVisible) {
