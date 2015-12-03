@@ -26,6 +26,7 @@ qTip 2 directive for AngularJS.
 | qtipDelay | [optional] [string\|int] [default=100] | How long to wait before the qTip disappears after it becomes inactive when the `mouseleave` hide event is used (i.e, by default), in ms. |
 | qtipAdjustX | [optional] [int] [default=0] | Position the qTip more to the left or right, relatively, in pixels. Use a negative value to move it left. |
 | qtipAdjustY | [optional] [int] [default=0] | Position the qTip more to the top or bottom, relatively, in pixels. Use a negative value to move it up. |
+| qtipStyle | [optional] [object] [default={}] | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
 | qtipSelector | [optional] [string] [interpolated] | CSS selector for element to use. When specified, the element found using the selector and jQuery will override any other content specified. |
 | qtipTemplate | [optional] [string] [interpolated] | Remote template to use for qTip. When specified, the template will be used for the qTip content and will override any other content specified. Use in conjuction with `qtipTemplateObject` |
 | qtipTemplateObject | [optional] [anyObject] | Will assign a model to the qTip template for use inside the template's content. You can reference this using `{{object}}` inside the template. |
@@ -38,18 +39,18 @@ qTip 2 directive for AngularJS.
 #### 1. Regular qTip
 
     <span qtip="Hi there, {{name}}!">{{name}}</span>
-    
+
 #### 2. Immediately visible qTip
 
     <span qtip="Woah!" qtip-visible="true">{{name}}</span>
-    
+
 #### 3. qTip from template, with multiple objects
 
-    <span qtip qtip-template="my_remote_template.html" 
+    <span qtip qtip-template="my_remote_template.html"
           qtip-template-object="{person: myPerson, callback: myCallback}">
         {{person.name}}
     </span>
-    
+
 ##### my_remote_template.html
 
     <span ng-click="object.callback(person)">

@@ -10,6 +10,7 @@
           qtipDelay: '=',
           qtipAdjustX: '=',
           qtipAdjustY: '=',
+          qtipStyle: '=',
           qtip: '@',
           qtipTitle: '@',
           qtipContent: '@',
@@ -22,7 +23,7 @@
           object: '=qtipTemplateObject'
         },
         link: function(scope, el, attrs) {
-          var adjustX, adjustY, at, content, delay, event, eventOut, fixed, generateQtip, my, qtipClass, string_to_bool;
+          var adjustX, adjustY, at, content, delay, event, eventOut, fixed, generateQtip, my, qtipClass, ref, string_to_bool, style;
           string_to_bool = function(str) {
             var ref;
             return !((ref = String(str).toLowerCase()) === 'false' || ref === '0' || ref === 'null');
@@ -37,6 +38,25 @@
           eventOut = scope.qtipEventOut || 'mouseout';
           fixed = scope.qtipFixed !== null ? string_to_bool(scope.qtipFixed) : true;
           delay = scope.qtipDelay || 100;
+          style = {
+            classes: qtipClass,
+            tip: (ref = scope.qtipStyle) != null ? ref : {}
+          };
+          if (scope.qtipEvent === 'false') {
+            event = false;
+          }
+          if (scope.qtipEventOut === 'false') {
+            eventOut = false;
+          }
+          scope.closeQtip = function(e) {
+            if (e != null) {
+              if (typeof e.preventDefault === "function") {
+                e.preventDefault();
+              }
+            }
+            $('.qtip:visible').qtip('hide');
+            return void 0;
+          };
           generateQtip = function(content) {
             var options;
             options = {
@@ -58,7 +78,7 @@
                 delay: delay,
                 event: eventOut
               },
-              style: qtipClass
+              style: style
             };
             $(el).qtip(options);
             if (attrs.qtipVisible) {
@@ -92,9 +112,11 @@
             }).then(function(html) {
               return generateQtip({
                 text: function() {
-                  return scope.$apply(function() {
-                    return $compile(html.data)(scope);
-                  });
+                  return $timeout(function() {
+                    return scope.$apply(function() {
+                      return $compile(html.data)(scope);
+                    });
+                  }, 1);
                 }
               });
             });
@@ -104,17 +126,16 @@
               text: scope.qtip
             });
           } else {
-            generateQtip(content);
-          }
-          scope.closeQtip = function(e) {
-            if (e != null) {
-              if (typeof e.preventDefault === "function") {
-                e.preventDefault();
+            generateQtip({
+              text: function() {
+                return $timeout(function() {
+                  return scope.$apply(function() {
+                    return $compile("<div>" + content + "</div>")(scope);
+                  });
+                }, 1);
               }
-            }
-            $('.qtip:visible').qtip('hide');
-            return void 0;
-          };
+            });
+          }
           return void 0;
         }
       };
