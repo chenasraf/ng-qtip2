@@ -5,7 +5,7 @@
     "Chen Asraf <chen@asraf.me>"
   ],
   "description": "Angular directive for qTip2, with lots of customization and config options. Supports dynamic templates and controller.",
-  "main": "ng-qtip.js",
+  "main": "ng-qtip2.js",
   "moduleType": [],
   "keywords": [
     "angular",
