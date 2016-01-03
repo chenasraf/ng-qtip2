@@ -1,4 +1,4 @@
-angular.module('qtip2', [])
+angular.module('ngQtip2', [])
 .directive 'qtip', ['$timeout', '$compile', '$http', '$templateCache', ($timeout, $compile, $http, $templateCache)->
   restrict: 'A'
   scope:

@@ -1,6 +1,6 @@
 {
-  "name": "angular-qtip2",
-  "homepage": "https://github.com/chenasraf/angular-qtip2",
+  "name": "ng-qtip2",
+  "homepage": "https://github.com/chenasraf/ng-qtip2",
   "authors": [
     "Chen Asraf <chen@asraf.me>"
   ],
@@ -26,5 +26,6 @@
   ],
   "dependencies": {
     "angular": "~1.4.8"
-  }
+  },
+  "ignore": []
 }
