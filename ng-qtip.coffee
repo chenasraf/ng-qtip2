@@ -22,20 +22,6 @@ angular.module('ngQtip2', [])
   link: (scope, el, attrs) ->
     string_to_bool = (str) -> !(String(str).toLowerCase() in ['false', '0', 'null'])
 
-    my = scope.qtipMy || 'bottom center'
-    at = scope.qtipAt || 'top center'
-    qtipClass = attrs.qtipClass || 'qtip'
-    adjustX = parseInt(scope.qtipAdjustX) || 0
-    adjustY = parseInt(scope.qtipAdjustY) || 0
-    content = scope.qtipContent || scope.qtip
-    event = scope.qtipEvent || 'mouseover'
-    eventOut = scope.qtipEventOut || 'mouseout'
-    fixed = if scope.qtipFixed isnt null then string_to_bool scope.qtipFixed else yes
-    delay = scope.qtipDelay || 100
-    style =
-      classes: qtipClass
-      tip: scope.qtipStyle ? {}
-
     if scope.qtipEvent is 'false'
       event = false
     if scope.qtipEventOut is 'false'
@@ -48,21 +34,23 @@ angular.module('ngQtip2', [])
 
     generateQtip = (content) ->
       options =
-        content: content
+        content: scope.qtipContent ? scope.qtip
         position:
-          my: my
-          at: at
+          my: scope.qtipMy ? 'bottom center'
+          at: scope.qtipAt ? 'top center'
           target: el
           adjust:
-            x: adjustX
-            y: adjustY
+            x: parseInt(scope.qtipAdjustX) ? 0
+            y: parseInt(scope.qtipAdjustY) ? 0
         show:
-          event: event
+          event: scope.qtipEvent ? 'mouseover'
         hide:
-          fixed: fixed
-          delay: delay
-          event: eventOut
-        style: style
+          fixed: if scope.qtipFixed isnt null then string_to_bool scope.qtipFixed else yes
+          delay: scope.qtipDelay ? 100
+          event: scope.qtipEventOut ? 'mouseout'
+        style:
+          classes: attrs.qtipClass ? 'qtip'
+          tip: scope.qtipStyle ? {}
 
       $(el).qtip options
 
