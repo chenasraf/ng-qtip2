@@ -7,9 +7,17 @@ qTip 2 directive for AngularJS.
 * Customizable delay, trigger types, position, CSS classes and tip position
 
 ## How to use
+### Manually include
 1. Make sure the file is included in your HTML:  
-    <pre><code>&lt;script type="text/javascript" src="angular-qtip.js"&gt;&lt;/script&gt;</code></pre>
+    <pre><code>&lt;script type="text/javascript" src="ng-qtip.js"&gt;&lt;/script&gt;</code></pre>
 2. Load the `ngQtip2` module in your `app.js`'s configuration
+### Using bower
+1. Install with bower
+
+        bower install ng-qtip2
+2. Make sure the file is included in your HTML:
+
+        <script type="text/javascript" src="bower_components/ng-qtip2/ng-qtip.js"></script>
 
 ## Available options
 `Interpolated` means you can assign expressions inside using `{{expression}}` format to create dynamic content.
