@@ -19,15 +19,16 @@
           qtipTemplate: '@',
           qtipEvent: '@',
           qtipEventOut: '@',
+          qtipClass: '@',
           qtipMy: '@',
           qtipAt: '@',
           object: '=qtipTemplateObject'
         },
         link: function(scope, el, attrs) {
-          var event, eventOut, generateQtip, string_to_bool;
-          string_to_bool = function(str) {
+          var event, eventOut, generateQtip, str2bool;
+          str2bool = function(str) {
             var ref;
-            return !((ref = String(str).toLowerCase()) === 'false' || ref === '0' || ref === 'null');
+            return (ref = String(str).toLowerCase()) !== 'false' && ref !== '0' && ref !== 'null' && ref !== '';
           };
           if (scope.qtipEvent === 'false') {
             event = false;
@@ -45,29 +46,29 @@
             return void 0;
           };
           generateQtip = function(content) {
-            var options, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9;
+            var options, ref, ref1, ref2, ref3, ref4;
             options = {
               content: (ref = scope.qtipContent) != null ? ref : scope.qtip,
               position: {
-                my: (ref1 = scope.qtipMy) != null ? ref1 : 'bottom center',
-                at: (ref2 = scope.qtipAt) != null ? ref2 : 'top center',
+                my: str2bool(scope.qtipMy) ? scope.qtipMy : 'bottom center',
+                at: str2bool(scope.qtipAt) ? scope.qtipAt : 'top center',
                 target: el,
                 adjust: {
-                  x: (ref3 = parseInt(scope.qtipAdjustX)) != null ? ref3 : 0,
-                  y: (ref4 = parseInt(scope.qtipAdjustY)) != null ? ref4 : 0
+                  x: parseInt(scope.qtipAdjustX) || 0,
+                  y: parseInt(scope.qtipAdjustY) || 0
                 }
               },
               show: {
-                event: (ref5 = scope.qtipEvent) != null ? ref5 : 'mouseover'
+                event: str2bool(scope.qtipEvent) ? scope.qtipEvent : 'mouseover'
               },
               hide: {
-                fixed: scope.qtipFixed !== null ? string_to_bool(scope.qtipFixed) : true,
-                delay: (ref6 = scope.qtipDelay) != null ? ref6 : 100,
-                event: (ref7 = scope.qtipEventOut) != null ? ref7 : 'mouseout'
+                fixed: scope.qtipFixed !== null ? str2bool(scope.qtipFixed) : true,
+                delay: (ref1 = scope.qtipDelay) != null ? ref1 : 100,
+                event: str2bool(scope.qtipEventOut) ? (ref2 = scope.qtipEventOut) != null ? ref2 : 'mouseout' : void 0
               },
               style: {
-                classes: (ref8 = attrs.qtipClass) != null ? ref8 : 'qtip',
-                tip: (ref9 = scope.qtipStyle) != null ? ref9 : {}
+                classes: str2bool(scope.qtipClass) ? (ref3 = scope.qtipClass) != null ? ref3 : 'qtip' : void 0,
+                tip: (ref4 = scope.qtipStyle) != null ? ref4 : {}
               }
             };
             $(el).qtip(options);
