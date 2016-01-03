@@ -1,4 +1,4 @@
-# angular-qtip2
+# ng-qtip2
 qTip 2 directive for AngularJS.
 
 ## Features
@@ -9,7 +9,7 @@ qTip 2 directive for AngularJS.
 ## How to use
 1. Make sure the file is included in your HTML:  
     <pre><code>&lt;script type="text/javascript" src="angular-qtip.js"&gt;&lt;/script&gt;</code></pre>
-2. Load the `qtip2` module in your `app.js`'s configuration
+2. Load the `ngQtip2` module in your `app.js`'s configuration
 
 ## Available options
 `Interpolated` means you can assign expressions inside using `{{expression}}` format to create dynamic content.
