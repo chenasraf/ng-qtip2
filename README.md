@@ -8,10 +8,13 @@ qTip 2 directive for AngularJS.
 
 ## How to use
 ### Manually include
+
 1. Make sure the file is included in your HTML:  
     <pre><code>&lt;script type="text/javascript" src="ng-qtip.js"&gt;&lt;/script&gt;</code></pre>
 2. Load the `ngQtip2` module in your `app.js`'s configuration
+
 ### Using bower
+
 1. Install with bower
 
         bower install ng-qtip2
