@@ -35,22 +35,23 @@ angular.module('ngQtip2', [])
 
     generateQtip = (content) ->
       options =
-        content: scope.qtipContent ? scope.qtip
+        content:
+          text: scope.qtipContent ? scope.qtip
         position:
           my: if str2bool scope.qtipMy then scope.qtipMy else 'bottom center'
           at: if str2bool scope.qtipAt then scope.qtipAt else 'top center'
           target: el
           adjust:
-            x: parseInt(scope.qtipAdjustX) || 0
-            y: parseInt(scope.qtipAdjustY) || 0
+            x: if scope.qtipAdjustX? then parseInt(scope.qtipAdjustX) else 0
+            y: if scope.qtipAdjustY? then parseInt(scope.qtipAdjustY) else 0
         show:
           event: if str2bool scope.qtipEvent then scope.qtipEvent else 'mouseover'
         hide:
           fixed: if scope.qtipFixed isnt null then str2bool scope.qtipFixed else yes
           delay: scope.qtipDelay ? 100
-          event: if str2bool scope.qtipEventOut then scope.qtipEventOut ? 'mouseout'
+          event: if str2bool scope.qtipEventOut then scope.qtipEventOut else 'mouseout'
         style:
-          classes: if str2bool scope.qtipClass then scope.qtipClass ? 'qtip'
+          classes: if str2bool scope.qtipClass then scope.qtipClass else 'qtip'
           tip: scope.qtipStyle ? {}
 
       $(el).qtip options
