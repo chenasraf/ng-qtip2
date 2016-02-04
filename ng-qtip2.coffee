@@ -8,17 +8,22 @@ angular.module('ngQtip2', [])
     qtipDelay: '='
     qtipAdjustX: '='
     qtipAdjustY: '='
-    qtipStyle: '='
+    qtipModalStyle: '='
+    qtipTipStyle: '='
     qtip: '@'
     qtipTitle: '@'
+    qtipTarget: '@'
     qtipContent: '@'
     qtipSelector: '@'
     qtipTemplate: '@'
     qtipEvent: '@'
     qtipEventOut: '@'
+    qtipHide: '='
+    qtipShow: '='
     qtipClass: '@'
     qtipMy: '@'
     qtipAt: '@'
+    qtipOptions: '='
     object: '=qtipTemplateObject'
   link: (scope, el, attrs) ->
     str2bool = (str) -> String(str).toLowerCase() not in ['false', '0', 'null', '']
@@ -28,9 +33,9 @@ angular.module('ngQtip2', [])
     if scope.qtipEventOut is 'false'
       eventOut = false
 
-    scope.closeQtip = (e) ->
+    scope.closeQtip = (e, id = el.data('hasqtip')) ->
       e?.preventDefault?()
-      $('.qtip:visible').qtip 'hide'
+      $("#qtip-#{id}").qtip 'hide'
       `void 0`
 
     generateQtip = (content) ->
@@ -38,7 +43,7 @@ angular.module('ngQtip2', [])
         position:
           my: if str2bool scope.qtipMy then scope.qtipMy else 'bottom center'
           at: if str2bool scope.qtipAt then scope.qtipAt else 'top center'
-          target: el
+          target: scope.qtipTarget ? el
           adjust:
             x: if scope.qtipAdjustX? then parseInt(scope.qtipAdjustX) else 0
             y: if scope.qtipAdjustY? then parseInt(scope.qtipAdjustY) else 0
@@ -50,8 +55,12 @@ angular.module('ngQtip2', [])
           event: if str2bool scope.qtipEventOut then scope.qtipEventOut else 'mouseout'
         style:
           classes: if str2bool scope.qtipClass then scope.qtipClass else 'qtip'
-          tip: scope.qtipStyle ? {}
+          modal: scope.qtipModalStyle ? {}
+          tip: scope.qtipTipStyle ? {}
 
+      options.hide = scope.qtipHide if scope.qtipHide?
+      options.show = scope.qtipShow if scope.qtipShow?
+      options = angular.extend {}, option, scope.qtipOptions if scope.qtipOption?
       options.content = if content? then content else text: scope.qtipContent ? scope.qtip
 
       $(el).qtip options
@@ -84,6 +93,7 @@ angular.module('ngQtip2', [])
       generateQtip title: scope.qtipTitle, text: scope.qtip
 
     else
+      content = scope.qtip ? scope.qtipContent
       generateQtip text: ->
         $timeout ->
           scope.$apply ->

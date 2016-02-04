@@ -11,21 +11,26 @@
           qtipDelay: '=',
           qtipAdjustX: '=',
           qtipAdjustY: '=',
-          qtipStyle: '=',
+          qtipModalStyle: '=',
+          qtipTipStyle: '=',
           qtip: '@',
           qtipTitle: '@',
+          qtipTarget: '@',
           qtipContent: '@',
           qtipSelector: '@',
           qtipTemplate: '@',
           qtipEvent: '@',
           qtipEventOut: '@',
+          qtipHide: '=',
+          qtipShow: '=',
           qtipClass: '@',
           qtipMy: '@',
           qtipAt: '@',
+          qtipOptions: '=',
           object: '=qtipTemplateObject'
         },
         link: function(scope, el, attrs) {
-          var event, eventOut, generateQtip, str2bool;
+          var content, event, eventOut, generateQtip, ref, str2bool;
           str2bool = function(str) {
             var ref;
             return (ref = String(str).toLowerCase()) !== 'false' && ref !== '0' && ref !== 'null' && ref !== '';
@@ -36,22 +41,25 @@
           if (scope.qtipEventOut === 'false') {
             eventOut = false;
           }
-          scope.closeQtip = function(e) {
+          scope.closeQtip = function(e, id) {
+            if (id == null) {
+              id = el.data('hasqtip');
+            }
             if (e != null) {
               if (typeof e.preventDefault === "function") {
                 e.preventDefault();
               }
             }
-            $('.qtip:visible').qtip('hide');
+            $("#qtip-" + id).qtip('hide');
             return void 0;
           };
           generateQtip = function(content) {
-            var options, ref, ref1, ref2;
+            var options, ref, ref1, ref2, ref3, ref4;
             options = {
               position: {
                 my: str2bool(scope.qtipMy) ? scope.qtipMy : 'bottom center',
                 at: str2bool(scope.qtipAt) ? scope.qtipAt : 'top center',
-                target: el,
+                target: (ref = scope.qtipTarget) != null ? ref : el,
                 adjust: {
                   x: scope.qtipAdjustX != null ? parseInt(scope.qtipAdjustX) : 0,
                   y: scope.qtipAdjustY != null ? parseInt(scope.qtipAdjustY) : 0
@@ -62,16 +70,26 @@
               },
               hide: {
                 fixed: scope.qtipFixed !== null ? str2bool(scope.qtipFixed) : true,
-                delay: (ref = scope.qtipDelay) != null ? ref : 100,
+                delay: (ref1 = scope.qtipDelay) != null ? ref1 : 100,
                 event: str2bool(scope.qtipEventOut) ? scope.qtipEventOut : 'mouseout'
               },
               style: {
                 classes: str2bool(scope.qtipClass) ? scope.qtipClass : 'qtip',
-                tip: (ref1 = scope.qtipStyle) != null ? ref1 : {}
+                modal: (ref2 = scope.qtipModalStyle) != null ? ref2 : {},
+                tip: (ref3 = scope.qtipTipStyle) != null ? ref3 : {}
               }
             };
+            if (scope.qtipHide != null) {
+              options.hide = scope.qtipHide;
+            }
+            if (scope.qtipShow != null) {
+              options.show = scope.qtipShow;
+            }
+            if (scope.qtipOption != null) {
+              options = angular.extend({}, option, scope.qtipOptions);
+            }
             options.content = content != null ? content : {
-              text: (ref2 = scope.qtipContent) != null ? ref2 : scope.qtip
+              text: (ref4 = scope.qtipContent) != null ? ref4 : scope.qtip
             };
             $(el).qtip(options);
             if (attrs.qtipVisible) {
@@ -121,6 +139,7 @@
               text: scope.qtip
             });
           } else {
+            content = (ref = scope.qtip) != null ? ref : scope.qtipContent;
             generateQtip({
               text: function() {
                 return $timeout(function() {
