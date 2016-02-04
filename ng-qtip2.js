@@ -48,9 +48,6 @@
           generateQtip = function(content) {
             var options, ref, ref1, ref2;
             options = {
-              content: {
-                text: (ref = scope.qtipContent) != null ? ref : scope.qtip
-              },
               position: {
                 my: str2bool(scope.qtipMy) ? scope.qtipMy : 'bottom center',
                 at: str2bool(scope.qtipAt) ? scope.qtipAt : 'top center',
@@ -65,13 +62,16 @@
               },
               hide: {
                 fixed: scope.qtipFixed !== null ? str2bool(scope.qtipFixed) : true,
-                delay: (ref1 = scope.qtipDelay) != null ? ref1 : 100,
+                delay: (ref = scope.qtipDelay) != null ? ref : 100,
                 event: str2bool(scope.qtipEventOut) ? scope.qtipEventOut : 'mouseout'
               },
               style: {
                 classes: str2bool(scope.qtipClass) ? scope.qtipClass : 'qtip',
-                tip: (ref2 = scope.qtipStyle) != null ? ref2 : {}
+                tip: (ref1 = scope.qtipStyle) != null ? ref1 : {}
               }
+            };
+            options.content = content != null ? content : {
+              text: (ref2 = scope.qtipContent) != null ? ref2 : scope.qtip
             };
             $(el).qtip(options);
             if (attrs.qtipVisible) {
@@ -107,7 +107,9 @@
                 text: function() {
                   return $timeout(function() {
                     return scope.$apply(function() {
-                      return $compile(html.data)(scope);
+                      var text;
+                      text = $compile(html.data)(scope);
+                      return text;
                     });
                   }, 1);
                 }
