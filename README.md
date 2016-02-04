@@ -37,15 +37,19 @@ qTip 2 directive for AngularJS.
 | qtipDelay | [optional] [string\|int] [default=100] | How long to wait before the qTip disappears after it becomes inactive when the `mouseleave` hide event is used (i.e, by default), in ms. |
 | qtipAdjustX | [optional] [int] [default=0] | Position the qTip more to the left or right, relatively, in pixels. Use a negative value to move it left. |
 | qtipAdjustY | [optional] [int] [default=0] | Position the qTip more to the top or bottom, relatively, in pixels. Use a negative value to move it up. |
-| qtipStyle | [optional] [object] [default={}] | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
+| qtipModalStyle | [optional] [object] [default={}] | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
+| qtipTipStyle | [optional] [object] [default={}] | Set inline style for the qTip's tip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`), and may also contain tip specific implementations (such as `mimic`, and `corner`). |
 | qtipClass | [optional] [string] [default=''] | Classes to use for the qTip, you can use these to style the qTip easier with CSS. |
 | qtipSelector | [optional] [string] [interpolated] | CSS selector for element to use. When specified, the element found using the selector and jQuery will override any other content specified. |
 | qtipTemplate | [optional] [string] [interpolated] | Remote template to use for qTip. When specified, the template will be used for the qTip content and will override any other content specified. Use in conjuction with `qtipTemplateObject` |
 | qtipTemplateObject | [optional] [anyObject] | Will assign a model to the qTip template for use inside the template's content. You can reference this using `{{object}}` inside the template. |
 | qtipEvent | [optional] [string] [interpolated] [default=mouseover] | What event triggers the qTip to show up. |
 | qtipEventOut | [optional] [string] [interpolated] [default=mouseout] | What event triggers the qTip to hide after being shown. |
+| qtipShow | [optional] [object] | Object for the qtip 'show' option (see qTip docs). Will override `qtipEvent` |
+| qtipHide | [optional] [object] | Object for the qtip 'hide' option (see qTip docs). Will override `qtipEventOut` |
 | qtipMy | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 | qtipAt | [optional] [string] [interpolated] [default=top center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
+| qtipOptions | [optional] [object] | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, overriding any existing keys. This is to explicitly override any options that are not handled the way you expect within these options, or to use options that are not yet implemented. |
 
 ## Examples
 #### 1. Regular qTip
@@ -81,4 +85,8 @@ qTip 2 directive for AngularJS.
     </ul>
 
 ## Contributing
-Feel free to create pull requests or request features for this.
+
+1. Fork this repository
+2. Make the desired changes
+3. Test your implementations, and that nothing was broken
+4. Create a pull request
