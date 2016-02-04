@@ -38,6 +38,7 @@ qTip 2 directive for AngularJS.
 | qtipAdjustX | [optional] [int] [default=0] | Position the qTip more to the left or right, relatively, in pixels. Use a negative value to move it left. |
 | qtipAdjustY | [optional] [int] [default=0] | Position the qTip more to the top or bottom, relatively, in pixels. Use a negative value to move it up. |
 | qtipStyle | [optional] [object] [default={}] | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
+| qtipClass | [optional] [string] [default=''] | Classes to use for the qTip, you can use these to style the qTip easier with CSS. |
 | qtipSelector | [optional] [string] [interpolated] | CSS selector for element to use. When specified, the element found using the selector and jQuery will override any other content specified. |
 | qtipTemplate | [optional] [string] [interpolated] | Remote template to use for qTip. When specified, the template will be used for the qTip content and will override any other content specified. Use in conjuction with `qtipTemplateObject` |
 | qtipTemplateObject | [optional] [anyObject] | Will assign a model to the qTip template for use inside the template's content. You can reference this using `{{object}}` inside the template. |
@@ -67,6 +68,7 @@ qTip 2 directive for AngularJS.
     <span ng-click="object.callback(person)">
         Hi {{object.person.name}}, you are {{object.person.age | pluralize:'year'}} old!
     </span>
+    
 #### 4. Dynamic qTip position
 
     <ul>
