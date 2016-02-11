@@ -54,12 +54,12 @@
             return void 0;
           };
           generateQtip = function(content) {
-            var options, ref, ref1, ref2, ref3, ref4;
+            var options, ref, ref1, ref2, ref3, ref4, ref5, ref6;
             options = {
               position: {
-                my: str2bool(scope.qtipMy) ? scope.qtipMy : 'bottom center',
-                at: str2bool(scope.qtipAt) ? scope.qtipAt : 'top center',
-                target: (ref = scope.qtipTarget) != null ? ref : el,
+                my: (ref = scope.qtipMy) != null ? ref : 'bottom center',
+                at: (ref1 = scope.qtipAt) != null ? ref1 : 'top center',
+                target: (ref2 = scope.qtipTarget) != null ? ref2 : el,
                 adjust: {
                   x: scope.qtipAdjustX != null ? parseInt(scope.qtipAdjustX) : 0,
                   y: scope.qtipAdjustY != null ? parseInt(scope.qtipAdjustY) : 0
@@ -70,13 +70,13 @@
               },
               hide: {
                 fixed: scope.qtipFixed !== null ? str2bool(scope.qtipFixed) : true,
-                delay: (ref1 = scope.qtipDelay) != null ? ref1 : 100,
+                delay: (ref3 = scope.qtipDelay) != null ? ref3 : 100,
                 event: str2bool(scope.qtipEventOut) ? scope.qtipEventOut : 'mouseout'
               },
               style: {
                 classes: str2bool(scope.qtipClass) ? scope.qtipClass : 'qtip',
-                modal: (ref2 = scope.qtipModalStyle) != null ? ref2 : {},
-                tip: (ref3 = scope.qtipTipStyle) != null ? ref3 : {}
+                modal: (ref4 = scope.qtipModalStyle) != null ? ref4 : {},
+                tip: (ref5 = scope.qtipTipStyle) != null ? ref5 : {}
               }
             };
             if (scope.qtipHide != null) {
@@ -89,7 +89,7 @@
               options = angular.extend({}, option, scope.qtipOptions);
             }
             options.content = content != null ? content : {
-              text: (ref4 = scope.qtipContent) != null ? ref4 : scope.qtip
+              text: (ref6 = scope.qtipContent) != null ? ref6 : scope.qtip
             };
             $(el).qtip(options);
             if (attrs.qtipVisible) {

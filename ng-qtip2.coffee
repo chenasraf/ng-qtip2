@@ -41,8 +41,8 @@ angular.module('ngQtip2', [])
     generateQtip = (content) ->
       options =
         position:
-          my: if str2bool scope.qtipMy then scope.qtipMy else 'bottom center'
-          at: if str2bool scope.qtipAt then scope.qtipAt else 'top center'
+          my: scope.qtipMy ? 'bottom center'
+          at: scope.qtipAt ? 'top center'
           target: scope.qtipTarget ? el
           adjust:
             x: if scope.qtipAdjustX? then parseInt(scope.qtipAdjustX) else 0
