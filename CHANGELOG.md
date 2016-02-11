@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.1
+=====
+* Updated `qtipAt` and `qtipMy` default values
+
 1.1.0
 =====
 * `qtipStyle` has been fixed and renamed to `qtipModalStyle`
