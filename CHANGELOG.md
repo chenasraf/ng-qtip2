@@ -1,7 +1,10 @@
 Changelog
 =========
 
-1.1.1
+1.1.2
+=====
+* Fixed a `qtipOptions` bug (thanks to @marcmascort)
+
 =====
 * Updated `qtipAt` and `qtipMy` default values
 
