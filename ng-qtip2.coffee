@@ -60,7 +60,7 @@ angular.module('ngQtip2', [])
 
       options.hide = scope.qtipHide if scope.qtipHide?
       options.show = scope.qtipShow if scope.qtipShow?
-      options = angular.extend {}, option, scope.qtipOptions if scope.qtipOption?
+      options = angular.extend {}, options, scope.qtipOptions if scope.qtipOptions?
       options.content = if content? then content else text: scope.qtipContent ? scope.qtip
 
       $(el).qtip options

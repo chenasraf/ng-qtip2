@@ -85,8 +85,8 @@
             if (scope.qtipShow != null) {
               options.show = scope.qtipShow;
             }
-            if (scope.qtipOption != null) {
-              options = angular.extend({}, option, scope.qtipOptions);
+            if (scope.qtipOptions != null) {
+              options = angular.extend({}, options, scope.qtipOptions);
             }
             options.content = content != null ? content : {
               text: (ref6 = scope.qtipContent) != null ? ref6 : scope.qtip
