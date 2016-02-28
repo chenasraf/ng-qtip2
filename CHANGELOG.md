@@ -3,7 +3,7 @@ Changelog
 
 1.1.2
 =====
-* Fixed a `qtipOptions` bug (thanks to @marcmascort)
+* Fixed a `qtipOptions` bug (thanks to [@marcmascort](https://github.com/marcmascort))
 
 1.1.1
 =====
