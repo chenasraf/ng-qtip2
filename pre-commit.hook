@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# put this in ./.git/hooks for auto-generation of JS from CS
+
+PATH="$PATH:/usr/local/bin"
+
+# echo 'Compressing .coffee...'
+find . -name '*.coffee' -exec coffee -c {} \;
+git add *.js
+
+exit 0
