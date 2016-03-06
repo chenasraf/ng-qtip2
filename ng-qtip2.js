@@ -130,9 +130,6 @@
                   return scope.$apply(function() {
                     var text;
                     text = $compile(html.data)(scope);
-                    console.debug({
-                      text: text
-                    });
                     return text;
                   });
                 });

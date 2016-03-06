@@ -92,7 +92,6 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
           $timeout ->
             scope.$apply ->
               text = $compile(html.data)(scope)
-              console.debug {text}
               return text
 
     else if scope.qtipTitle?
