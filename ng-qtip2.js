@@ -15,6 +15,7 @@
         qtipModalStyle: '&?',
         qtipTipStyle: '&?',
         qtipShowEffect: '&?',
+        qtipHideEffect: '&?',
         qtipPersistent: '&?',
         qtip: '@',
         qtipTitle: '@',
@@ -56,7 +57,7 @@
           }
         };
         generateQtip = function(content) {
-          var options, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9;
+          var options, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9;
           options = {
             position: {
               my: (ref = scope.qtipMy) != null ? ref : 'bottom center',
@@ -65,21 +66,22 @@
               adjust: {
                 x: scope.qtipAdjustX != null ? parseInt(scope.qtipAdjustX) : 0,
                 y: scope.qtipAdjustY != null ? parseInt(scope.qtipAdjustY) : 0
-              },
-              effect: (ref2 = typeof scope.qtipShowEffect === "function" ? scope.qtipShowEffect() : void 0) != null ? ref2 : true
+              }
             },
             show: {
+              effect: (ref2 = typeof scope.qtipShowEffect === "function" ? scope.qtipShowEffect() : void 0) != null ? ref2 : true,
               event: (ref3 = scope.qtipEvent) != null ? ref3 : 'mouseover'
             },
             hide: {
+              effect: (ref4 = typeof scope.qtipHideEffect === "function" ? scope.qtipHideEffect() : void 0) != null ? ref4 : true,
               fixed: (typeof scope.qtipFixed === "function" ? scope.qtipFixed() : void 0) ? str2bool(scope.qtipFixed) : true,
-              delay: (ref4 = scope.qtipDelay) != null ? ref4 : 100,
-              event: (ref5 = scope.qtipEventOut) != null ? ref5 : 'mouseout'
+              delay: (ref5 = scope.qtipDelay) != null ? ref5 : 100,
+              event: (ref6 = scope.qtipEventOut) != null ? ref6 : 'mouseout'
             },
             style: {
-              classes: (ref6 = scope.qtipClass) != null ? ref6 : 'qtip',
-              modal: (ref7 = typeof scope.qtipModalStyle === "function" ? scope.qtipModalStyle() : void 0) != null ? ref7 : {},
-              tip: (ref8 = typeof scope.qtipTipStyle === "function" ? scope.qtipTipStyle() : void 0) != null ? ref8 : {}
+              classes: (ref7 = scope.qtipClass) != null ? ref7 : 'qtip',
+              modal: (ref8 = typeof scope.qtipModalStyle === "function" ? scope.qtipModalStyle() : void 0) != null ? ref8 : {},
+              tip: (ref9 = typeof scope.qtipTipStyle === "function" ? scope.qtipTipStyle() : void 0) != null ? ref9 : {}
             }
           };
           if (scope.qtipHide != null) {
@@ -92,7 +94,7 @@
             options = angular.extend({}, options, scope.qtipOptions());
           }
           options.content = content != null ? content : {
-            text: (ref9 = scope.qtipContent) != null ? ref9 : scope.qtip
+            text: (ref10 = scope.qtipContent) != null ? ref10 : scope.qtip
           };
           ($(el)).qtip(options);
           if (attrs.qtipVisible != null) {

@@ -38,6 +38,7 @@ qTip 2 directive for AngularJS.
 | qtip-adjust-x | [optional] [int] [default=0] | Position the qTip more to the left or right, relatively, in pixels. Use a negative value to move it left. |
 | qtip-adjust-y | [optional] [int] [default=0] | Position the qTip more to the top or bottom, relatively, in pixels. Use a negative value to move it up. |
 | qtip-show-effect | [optional] [boolean] [default=true] | If `false`, will disable animating the showing effect of qTip (this is useful when the dynamic positioning shows a flicker and animates the qTip from the side of the element or screen before positioning it correctly). |
+| qtip-hide-effect | [optional] [boolean] [default=true] | If `false`, will disable animating the hiding effect of qTip (this is useful when the dynamic positioning shows a flicker and animates the qTip from the side of the element or screen before positioning it correctly). |
 | qtip-modal-style | [optional] [object] [default={}] | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
 | qtip-tip-style | [optional] [object] [default={}] | Set inline style for the qTip's tip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`), and may also contain tip specific implementations (such as `mimic`, and `corner`). |
 | qtip-class | [optional] [string] [default=''] | Classes to use for the qTip, you can use these to style the qTip easier with CSS. |

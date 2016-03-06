@@ -1,7 +1,7 @@
 # Changelog
 ## 1.2.0
 - Add qtip2 dependency for bower
-- Added `qtip-show-effect` and `qtip-persistent` (see readme for information)
+- Added `qtip-show-effect`, `qtip-hide-effect` and `qtip-persistent` (see readme for information)
 
 ## 1.1.2
 - Fixed a `qtip-options` bug (thanks to [@marcmascort](https://github.com/marcmascort))

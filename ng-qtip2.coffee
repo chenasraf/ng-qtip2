@@ -10,6 +10,7 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
     qtipModalStyle: '&?'
     qtipTipStyle: '&?'
     qtipShowEffect: '&?'
+    qtipHideEffect: '&?'
     qtipPersistent: '&?'
     qtip: '@'
     qtipTitle: '@'
@@ -47,10 +48,11 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
           adjust:
             x: if scope.qtipAdjustX? then parseInt(scope.qtipAdjustX) else 0
             y: if scope.qtipAdjustY? then parseInt(scope.qtipAdjustY) else 0
-          effect: scope.qtipShowEffect?() ? yes
         show:
+          effect: scope.qtipShowEffect?() ? yes
           event: scope.qtipEvent ? 'mouseover'
         hide:
+          effect: scope.qtipHideEffect?() ? yes
           fixed: if scope.qtipFixed?() then str2bool scope.qtipFixed else yes
           delay: scope.qtipDelay ? 100
           event: scope.qtipEventOut ? 'mouseout'
