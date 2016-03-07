@@ -51,7 +51,7 @@ qTip 2 directive for AngularJS.
 | qtip-hide | [optional] [object] | Object for the qtip 'hide' option (see qTip docs). Will override `qtip-event-out` |
 | qtip-my | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 | qtip-at | [optional] [string] [interpolated] [default=top center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
-| qtip-persistent | [optional] [boolean] [default=false] | If `true`, qTip will be re-rendered next time it is open. |
+| qtip-persistent | [optional] [boolean] [default=true] | If `false`, qTip will be re-rendered next time it is open. |
 | qtip-options | [optional] [object] | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, overriding any existing keys. This is to explicitly override any options that are not handled the way you expect within these options, or to use options that are not yet implemented. |
 
 ## Examples

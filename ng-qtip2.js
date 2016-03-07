@@ -40,7 +40,7 @@
           return (ref = String(str).toLowerCase()) !== 'false' && ref !== '0' && ref !== 'null' && ref !== '';
         };
         scope.closeQtip = function(e, id, arg) {
-          var qtEl, ref, rendered;
+          var qtEl, ref, ref1, rendered;
           if (id == null) {
             id = el.data('hasqtip');
           }
@@ -52,7 +52,7 @@
           }
           qtEl = $("#qtip-" + id);
           qtEl.qtip('hide');
-          if (!scope.qtipPersistent()) {
+          if (!((ref1 = typeof scope.qtipPersistent === "function" ? scope.qtipPersistent() : void 0) != null ? ref1 : true)) {
             qtEl.qtip().rendered = false;
           }
         };
