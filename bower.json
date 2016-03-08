@@ -1,31 +1,15 @@
 {
   "name": "ng-qtip2",
   "homepage": "https://github.com/chenasraf/ng-qtip2",
-  "authors": [
-    "Chen Asraf <chen@asraf.me>"
-  ],
+  "authors": ["Chen Asraf <chen@asraf.me>"],
   "description": "Angular directive for qTip2, with lots of customization and config options. Supports dynamic templates and controller.",
   "main": "ng-qtip2.js",
   "moduleType": [],
-  "keywords": [
-    "angular",
-    "qtip",
-    "qtip2",
-    "tooltip",
-    "tool-tip",
-    "tool",
-    "tip"
-  ],
+  "keywords": ["angular", "qtip", "qtip2", "tooltip", "tool-tip", "tool", "tip"],
   "license": "Apache-2.0",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": [],
   "dependencies": {
-    "angular": "~1.4.8"
-  },
-  "ignore": []
+    "angular": "~1.4.8",
+    "qtip2": "~2.2.1"
+  }
 }
