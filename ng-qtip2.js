@@ -49,7 +49,7 @@
           return $("#qtip-" + id);
         };
         scope.closeQtip = function(e, id, arg) {
-          var qtEl, ref, rendered;
+          var qtEl, ref, ref1, rendered;
           if (id == null) {
             id = scope.getQtipId();
           }
@@ -61,9 +61,7 @@
           }
           qtEl = $("#qtip-" + id);
           qtEl.qtip('hide');
-          if (scope.qtipPersistent != null) {
-            qtEl.qtip().rendered = !scope.qtipPersistent;
-          }
+          qtEl.qtip().rendered = (ref1 = scope.qtipPersistent) != null ? ref1 : rendered;
         };
         generateQtip = function(content) {
           var options, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9;

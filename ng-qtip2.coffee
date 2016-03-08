@@ -41,10 +41,7 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
       e?.preventDefault?()
       qtEl = ($ "#qtip-#{id}")
       qtEl.qtip 'hide'
-
-      if scope.qtipPersistent?
-        qtEl.qtip().rendered = not scope.qtipPersistent
-
+      qtEl.qtip().rendered = scope.qtipPersistent ? rendered
       return
 
     generateQtip = (content) ->
