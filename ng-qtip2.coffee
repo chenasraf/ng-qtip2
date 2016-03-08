@@ -3,15 +3,15 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
   scope:
     qtipVisible: '=?'
     qtipDisable: '=?'
-    qtipFixed: '&?'
-    qtipDelay: '&?'
+    qtipFixed: '=?'
+    qtipDelay: '=?'
     qtipAdjustX: '@'
     qtipAdjustY: '@'
-    qtipModalStyle: '&?'
-    qtipTipStyle: '&?'
-    qtipShowEffect: '&?'
-    qtipHideEffect: '&?'
-    qtipPersistent: '&?'
+    qtipModalStyle: '=?'
+    qtipTipStyle: '=?'
+    qtipShowEffect: '=?'
+    qtipHideEffect: '=?'
+    qtipPersistent: '=?'
     qtip: '@'
     qtipTitle: '@'
     qtipTarget: '@'
@@ -20,22 +20,30 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
     qtipTemplate: '@'
     qtipEvent: '@'
     qtipEventOut: '@'
-    qtipHide: '&?'
-    qtipShow: '&?'
+    qtipHide: '=?'
+    qtipShow: '=?'
     qtipClass: '@'
     qtipMy: '@'
     qtipAt: '@'
-    qtipOptions: '&?'
+    qtipOptions: '=?'
     object: '=qtipTemplateObject'
 
   link: (scope, el, attrs) ->
     str2bool = (str) -> String(str).toLowerCase() not in ['false', '0', 'null', '']
 
-    scope.closeQtip = (e, id = el.data('hasqtip'), {rendered = no} = {}) ->
+    scope.getQtipId = ->
+      el.data('hasqtip')
+
+    scope.getQtipElement = (id = scope.getQtipId()) ->
+      ($ "#qtip-#{id}")
+
+    scope.closeQtip = (e, id = scope.getQtipId(), {rendered = yes} = {}) ->
       e?.preventDefault?()
       qtEl = ($ "#qtip-#{id}")
       qtEl.qtip 'hide'
-      qtEl.qtip().rendered = no unless scope.qtipPersistent?() ? yes
+
+      if scope.qtipPersistent?
+        qtEl.qtip().rendered = not scope.qtipPersistent
 
       return
 
@@ -49,21 +57,21 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
             x: if scope.qtipAdjustX? then parseInt(scope.qtipAdjustX) else 0
             y: if scope.qtipAdjustY? then parseInt(scope.qtipAdjustY) else 0
         show:
-          effect: scope.qtipShowEffect?() ? yes
+          effect: scope.qtipShowEffect ? yes
           event: scope.qtipEvent ? 'mouseover'
         hide:
-          effect: scope.qtipHideEffect?() ? yes
-          fixed: if scope.qtipFixed?() then str2bool scope.qtipFixed else yes
+          effect: scope.qtipHideEffect ? yes
+          fixed: if scope.qtipFixed then str2bool scope.qtipFixed else yes
           delay: scope.qtipDelay ? 100
           event: scope.qtipEventOut ? 'mouseout'
         style:
           classes: scope.qtipClass ? 'qtip'
-          modal: scope.qtipModalStyle?() ? {}
-          tip: scope.qtipTipStyle?() ? {}
+          modal: scope.qtipModalStyle ? {}
+          tip: scope.qtipTipStyle ? {}
 
-      options.hide = scope.qtipHide?() if scope.qtipHide?
-      options.show = scope.qtipShow?() if scope.qtipShow?
-      options = angular.extend {}, options, scope.qtipOptions() if typeof scope.qtipOptions?() is 'object'
+      options.hide = scope.qtipHide if scope.qtipHide?
+      options.show = scope.qtipShow if scope.qtipShow?
+      options = angular.extend {}, options, scope.qtipOptions if scope.qtipOptions?
       options.content = if content? then content else text: scope.qtipContent ? scope.qtip
 
       ($ el).qtip options
