@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "ignore": [],
   "dependencies": {
-    "angular": "~1.4.8",
+    "angular": ">1.4.7 <2",
     "qtip2": "~2.2.1"
   }
 }
