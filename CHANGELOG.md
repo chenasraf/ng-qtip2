@@ -1,4 +1,7 @@
 # Changelog
+## 1.2.2
+- Updated dependencies to support Angular 1.4.7+
+- 
 ## 1.2.1
 - Updated `closeQtip`
 
