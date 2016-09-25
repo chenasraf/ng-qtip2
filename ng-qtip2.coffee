@@ -86,7 +86,7 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
       options.style.modal = scope.qtipModalStyle if scope.qtipModalStyle?
       options.style.tip = scope.qtipTipStyle if scope.qtipTipStyle?
 
-      options = angular.extend {}, options, scope.qtipOptions if scope.qtipOptions?
+      options = angular.merge {}, options, scope.qtipOptions if scope.qtipOptions?
       options.content = if content? then content else text: scope.qtipContent ? scope.qtip
 
       ($ el).qtip options
