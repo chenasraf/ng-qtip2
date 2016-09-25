@@ -1,4 +1,7 @@
 # Changelog
+## 1.2.3
+- Fixes to qTip defaults & overriding (thanks to @idoa01)
+
 ## 1.2.2
 - Updated dependencies to support Angular 1.4.7+
 
