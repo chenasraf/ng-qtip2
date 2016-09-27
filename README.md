@@ -90,6 +90,8 @@ qTip 2 directive for AngularJS.
 ## Contributing
 
 1. Fork this repository
-2. Make the desired changes
-3. Test your implementations, and that nothing was broken
-4. Create a pull request
+1. Make the desired changes
+1. Test your implementations, and that nothing was broken
+1. To auto-compile JS from Coffee, copy `pre-commit.hook` to `.git/hooks`
+1. Commit & Push to your fork (auto-compile should do its magic during commit)
+1. Create a pull request
