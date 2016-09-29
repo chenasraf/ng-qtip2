@@ -1,4 +1,8 @@
 # Changelog
+## 1.3.0
+- Added ability to globally set defaults for qTip options
+- Overriding options using attributes now merges deeply instead of replaces
+
 ## 1.2.3
 - Fixes to qTip defaults & overriding (thanks to @idoa01)
 

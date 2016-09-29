@@ -2,7 +2,7 @@
 (function() {
   var NgQtip2;
 
-  NgQtip2 = function($timeout, $compile, $http, $templateCache) {
+  NgQtip2 = function($timeout, $compile, $http, $templateCache, qtipDefaults) {
     return {
       restrict: 'A',
       scope: {
@@ -35,7 +35,10 @@
         object: '=qtipTemplateObject'
       },
       link: function(scope, el, attrs) {
-        var content, generateQtip, ref, str2bool;
+        var content, generateQtip, ref, removeEmpties, str2bool;
+        if (scope.qtipOptions == null) {
+          scope.qtipOptions = {};
+        }
         str2bool = function(str) {
           var ref;
           return (ref = String(str).toLowerCase()) !== 'false' && ref !== '0' && ref !== 'null' && ref !== '';
@@ -64,85 +67,64 @@
           qtEl.qtip('hide');
           qtEl.qtip().rendered = (ref1 = scope.qtipPersistent) != null ? ref1 : rendered;
         };
+        removeEmpties = function(obj, deep) {
+          var k, results, v;
+          if (deep == null) {
+            deep = true;
+          }
+          results = [];
+          for (k in obj) {
+            v = obj[k];
+            if ((v != null) && typeof v === 'object' && deep) {
+              results.push(removeEmpties(obj[k], deep));
+            } else if (v == null) {
+              results.push(delete obj[k]);
+            } else {
+              results.push(void 0);
+            }
+          }
+          return results;
+        };
         generateQtip = function(content) {
-          var base, options, ref;
-          base = {
+          var attrOptions, options, ref;
+          attrOptions = {
             position: {
-              my: 'bottom center',
-              at: 'top center',
+              my: scope.qtipMy,
+              at: scope.qtipAt,
+              target: scope.qtipTarget != null ? $(scope.qtipTarget) : void 0,
               adjust: {
-                x: 0,
-                y: 0
+                x: scope.qtipAdjustX != null ? parseInt(scope.qtipAdjustX) : void 0,
+                y: scope.qtipAdjustY != null ? parseInt(scope.qtipAdjustY) : void 0
               }
             },
             show: {
-              effect: true,
-              event: 'mouseover'
+              effect: scope.qtipShowEffect,
+              event: scope.qtipEvent
             },
             hide: {
-              effect: true,
-              fixed: true,
-              delay: 100,
-              event: 'mouseout'
+              effect: scope.qtipHideEffect,
+              fixed: str2bool(scope.qtipFixed),
+              event: scope.qtipEventOut
             },
             style: {
-              classes: 'qtip',
-              modal: {},
-              tip: {}
+              classes: scope.qtipClass,
+              modal: scope.qtipModalStyle,
+              tip: scope.qtipTipStyle
+            },
+            content: content != null ? content : {
+              text: (ref = scope.qtipContent) != null ? ref : scope.qtip
             }
           };
-          options = angular.merge({}, base, scope.qtipDefaults || {});
-          if (scope.qtipMy != null) {
-            options.position.my = scope.qtipMy;
-          }
-          if (scope.qtipAt != null) {
-            options.position.at = scope.qtipAt;
-          }
-          if (scope.qtipTarget != null) {
-            options.position.target = $(scope.qtipTarget);
-          }
-          if (scope.qtipAdjustX != null) {
-            options.position.adjust.x = parseInt(scope.qtipAdjustX);
-          }
-          if (scope.qtipAdjustY != null) {
-            options.position.adjust.y = parseInt(scope.qtipAdjustY);
-          }
-          if (scope.qtipShowEffect != null) {
-            options.show.effect = scope.qtipShowEffect;
-          }
-          if (scope.qtipEvent != null) {
-            options.show.event = scope.qtipEvent;
+          if (scope.qtipHide != null) {
+            angular.merge(attrOptions.hide, scope.qtipHide);
           }
           if (scope.qtipShow != null) {
-            options.show = scope.qtipShow;
+            angular.merge(attrOptions.show, scope.qtipShow);
           }
-          if (scope.qtipHideEffect != null) {
-            options.hide.effect = scope.qtipHideEffect;
-          }
-          if (scope.qtipFixed != null) {
-            options.hide.fixed = str2bool(scope.qtipFixed);
-          }
-          if (scope.qtipEventOut != null) {
-            options.hide.event = scope.qtipEventOut;
-          }
-          if (scope.qtipHide != null) {
-            options.hide = scope.qtipHide;
-          }
-          if (scope.qtipClass != null) {
-            options.style.classes = scope.qtipClass;
-          }
-          if (scope.qtipModalStyle != null) {
-            options.style.modal = scope.qtipModalStyle;
-          }
-          if (scope.qtipTipStyle != null) {
-            options.style.tip = scope.qtipTipStyle;
-          }
-          if (scope.qtipOptions != null) {
-            options = angular.merge({}, options, scope.qtipOptions);
-          }
-          options.content = content != null ? content : {
-            text: (ref = scope.qtipContent) != null ? ref : scope.qtip
-          };
+          removeEmpties(options);
+          removeEmpties(attrOptions);
+          removeEmpties(scope.qtipOptions);
+          options = angular.merge({}, qtipDefaults, attrOptions, scope.qtipOptions);
           ($(el)).qtip(options);
           if (attrs.qtipVisible != null) {
             scope.$watch('qtipVisible', function(newVal) {
@@ -206,8 +188,23 @@
     };
   };
 
-  NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache'];
+  NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache', 'qtipDefaults'];
 
-  angular.module('ngQtip2', []).directive('qtip', NgQtip2);
+  angular.module('ngQtip2', []).directive('qtip', NgQtip2).provider('qtipDefaults', function() {
+    this.defaults = {};
+    this.setDefaults = (function(_this) {
+      return function(defaults) {
+        if (defaults == null) {
+          defaults = {};
+        }
+        return angular.merge(_this.defaults, defaults);
+      };
+    })(this);
+    this.$get = (function(_this) {
+      return function() {
+        return _this.defaults;
+      };
+    })(this);
+  });
 
 }).call(this);

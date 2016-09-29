@@ -22,6 +22,25 @@ qTip 2 directive for AngularJS.
 
         <script type="text/javascript" src="bower_components/ng-qtip2/ng-qtip2.js"></script>
 
+### Overriding default options
+
+You may override any options for qTip tips globally in your module.  
+Do this by injecting `qtipDefaultsProvider` inside your app's `config` stage, and using the `setDefaults` method.  
+Example config stage:
+
+```javascript
+angular.module('myApp', ['ngQtip2']).config(function(qtipDefaultsProvider) {
+  qtipDefaultsProvider.setDefaults({
+    position: {
+      adjust: {
+        x: 10,
+        y: 20
+      }
+    }
+  });
+});
+```
+
 ## Available options
 `Interpolated` means you can assign expressions inside using `{{expression}}` format to create dynamic content.
 `Non-interpolated` are immediately evaluated as they are. For example, `qtip-visible` expects a `boolean` condition expression inside (e.g. `qtip-visible="title.length > 0"` or `qtip-visible="true"`).

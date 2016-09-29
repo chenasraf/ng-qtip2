@@ -1,4 +1,4 @@
-NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
+NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults) ->
   restrict: 'A'
   scope:
     qtipVisible: '=?'
@@ -30,6 +30,8 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
     object: '=qtipTemplateObject'
 
   link: (scope, el, attrs) ->
+    scope.qtipOptions ?= {}
+
     str2bool = (str) -> String(str).toLowerCase() not in ['false', '0', 'null', '']
 
     scope.getQtipId = ->
@@ -45,49 +47,41 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
       qtEl.qtip().rendered = scope.qtipPersistent ? rendered
       return
 
+    removeEmpties = (obj, deep = true) ->
+      for k, v of obj
+        if v? and typeof v is 'object' and deep
+          removeEmpties obj[k], deep
+        else if not v?
+          delete obj[k]
+
     generateQtip = (content) ->
-      base =
+      attrOptions =
         position:
-          my: 'bottom center'
-          at: 'top center'
+          my: scope.qtipMy
+          at: scope.qtipAt
+          target: if scope.qtipTarget? then ($ scope.qtipTarget)
           adjust:
-            x: 0
-            y: 0
+            x: if scope.qtipAdjustX? then parseInt(scope.qtipAdjustX)
+            y: if scope.qtipAdjustY? then parseInt(scope.qtipAdjustY)
         show:
-          effect: yes
-          event: 'mouseover'
+          effect: scope.qtipShowEffect
+          event: scope.qtipEvent
         hide:
-          effect: yes
-          fixed: yes
-          delay: 100
-          event: 'mouseout'
+          effect: scope.qtipHideEffect
+          fixed: str2bool scope.qtipFixed
+          event: scope.qtipEventOut
         style:
-          classes: 'qtip'
-          modal: {}
-          tip: {}
-      options = angular.merge {}, base, scope.qtipDefaults || {}
+          classes: scope.qtipClass
+          modal: scope.qtipModalStyle
+          tip: scope.qtipTipStyle
+        content: if content? then content else text: scope.qtipContent ? scope.qtip
 
-      options.position.my = scope.qtipMy if scope.qtipMy?
-      options.position.at = scope.qtipAt if scope.qtipAt?
-      options.position.target = ($ scope.qtipTarget) if scope.qtipTarget?
-      options.position.adjust.x = parseInt(scope.qtipAdjustX) if scope.qtipAdjustX?
-      options.position.adjust.y = parseInt(scope.qtipAdjustY) if scope.qtipAdjustY?
-
-      options.show.effect = scope.qtipShowEffect if scope.qtipShowEffect?
-      options.show.event = scope.qtipEvent if scope.qtipEvent?
-      options.show = scope.qtipShow if scope.qtipShow?
-
-      options.hide.effect = scope.qtipHideEffect if scope.qtipHideEffect?
-      options.hide.fixed = str2bool scope.qtipFixed if scope.qtipFixed?
-      options.hide.event = scope.qtipEventOut if scope.qtipEventOut?
-      options.hide = scope.qtipHide if scope.qtipHide?
-
-      options.style.classes = scope.qtipClass if scope.qtipClass?
-      options.style.modal = scope.qtipModalStyle if scope.qtipModalStyle?
-      options.style.tip = scope.qtipTipStyle if scope.qtipTipStyle?
-
-      options = angular.merge {}, options, scope.qtipOptions if scope.qtipOptions?
-      options.content = if content? then content else text: scope.qtipContent ? scope.qtip
+      angular.merge attrOptions.hide, scope.qtipHide if scope.qtipHide?
+      angular.merge attrOptions.show, scope.qtipShow if scope.qtipShow?
+      removeEmpties options
+      removeEmpties attrOptions
+      removeEmpties scope.qtipOptions
+      options = angular.merge {}, qtipDefaults, attrOptions, scope.qtipOptions
 
       ($ el).qtip options
 
@@ -131,5 +125,16 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache) ->
 
     return
 
-NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache']
-angular.module('ngQtip2', []).directive 'qtip', NgQtip2
+NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache', 'qtipDefaults']
+
+angular.module('ngQtip2', [])
+  .directive 'qtip', NgQtip2
+  .provider 'qtipDefaults', ->
+    @defaults = {}
+
+    @setDefaults = (defaults = {}) =>
+      angular.merge @defaults, defaults
+
+    @$get = => @defaults
+
+    return
