@@ -52,7 +52,49 @@ qTip 2 directive for AngularJS.
 | qtip-my | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 | qtip-at | [optional] [string] [interpolated] [default=top center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 | qtip-persistent | [optional] [boolean] [default=true] | If `false`, qTip will be re-rendered next time it is open. |
+| qtip-defaults | [optional] [object] | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, as the default behavior to qtip. you can override any option listed in default with other `qtip-` options. |
 | qtip-options | [optional] [object] | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, overriding any existing keys. This is to explicitly override any options that are not handled the way you expect within these options, or to use options that are not yet implemented. |
+| qtip-api | [optional] [object] | Pass an empty reference object to this attribute to get back an "api" object ([see below](#api-object) for api documentation) |
+
+## API Object
+access the api by adding a scope object to `qtip-api`
+
+```html
+<span qtip="Hi!" qtip-api="tip"></span>
+```
+
+and then access it in your code:
+
+```js
+$scope.tip.api().get("position.my")
+```
+
+Because of the way qtip2 works, ***the api won't be available until you first render it***.
+This means that it won't be ready until the user showed it (hovered on the associated directive)
+or you've passed to the options `{prerender: true}` which will force qtip2 to render the qtip on page load.
+
+the `qtip-api` object has 3 methods:
+
+* **isReady()**
+
+  Returns true/false
+  because of the way qtip2 works, the api won't be available until you first render it.
+  isReady() will tell you if the api object is ready for use 
+
+* **api()**
+
+  Returns a qtip2 api object
+  for a full documentation about the api object, see: http://qtip2.com/api
+
+* **apiPromise()** 
+
+  Returns a `$q` promise holding the api object upon resolve
+  example:
+  ```js
+  $scope.tip.apiPromise().then(function(api) {
+    console.log(api.get("content"));
+  });
+  ```
 
 ## Examples
 #### 1. Regular qTip
