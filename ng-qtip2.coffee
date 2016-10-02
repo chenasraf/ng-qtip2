@@ -1,4 +1,4 @@
-NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults) ->
+NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
   restrict: 'A'
   scope:
     qtipVisible: '=?'
@@ -25,14 +25,16 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults) ->
     qtipClass: '@'
     qtipMy: '@'
     qtipAt: '@'
-    qtipDefaults: '=?'
     qtipOptions: '=?'
+    qtipApi: '=?'
     object: '=qtipTemplateObject'
 
   link: (scope, el, attrs) ->
     scope.qtipOptions ?= {}
 
     str2bool = (str) -> String(str).toLowerCase() not in ['false', '0', 'null', '']
+
+    scope.apiPromise = $q.defer()
 
     scope.getQtipId = ->
       el.data('hasqtip')
@@ -53,6 +55,24 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults) ->
           removeEmpties obj[k], deep
         else if not v?
           delete obj[k]
+
+    scope.api = (e, id = scope.getQtipId()) ->
+      qtEl = ($ "#qtip-#{id}")
+      return qtEl.qtip "api"
+
+    scope.isApiReady = -> !!scope.getQtipElement().qtip().rendered
+
+    scope.qtipApi =
+      isReady: scope.isApiReady
+      api: scope.api
+      apiPromise: scope.apiPromise.promise
+
+    scope.resolveApiPromise = (event, api) ->
+      scope.apiPromise.resolve(api)
+
+    scope._before = (before, fn) -> ->
+      before?(arguments...)
+      fn?(arguments...)
 
     generateQtip = (content) ->
       attrOptions =
@@ -82,6 +102,12 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults) ->
       removeEmpties attrOptions
       removeEmpties scope.qtipOptions
       options = angular.merge {}, qtipDefaults, attrOptions, scope.qtipOptions
+
+      if options.events?.render?
+        options.events.render = scope._before(scope.resolveApiPromise, options.events.render)
+      else
+        options.events ?= {}
+        options.events.render = scope.resolveApiPromise
 
       ($ el).qtip options
 
@@ -125,7 +151,7 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults) ->
 
     return
 
-NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache', 'qtipDefaults']
+NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache', 'qtipDefaults', '$q']
 
 angular.module('ngQtip2', [])
   .directive 'qtip', NgQtip2

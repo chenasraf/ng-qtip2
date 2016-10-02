@@ -2,7 +2,7 @@
 (function() {
   var NgQtip2;
 
-  NgQtip2 = function($timeout, $compile, $http, $templateCache, qtipDefaults) {
+  NgQtip2 = function($timeout, $compile, $http, $templateCache, qtipDefaults, $q) {
     return {
       restrict: 'A',
       scope: {
@@ -30,8 +30,8 @@
         qtipClass: '@',
         qtipMy: '@',
         qtipAt: '@',
-        qtipDefaults: '=?',
         qtipOptions: '=?',
+        qtipApi: '=?',
         object: '=qtipTemplateObject'
       },
       link: function(scope, el, attrs) {
@@ -43,6 +43,7 @@
           var ref;
           return (ref = String(str).toLowerCase()) !== 'false' && ref !== '0' && ref !== 'null' && ref !== '';
         };
+        scope.apiPromise = $q.defer();
         scope.getQtipId = function() {
           return el.data('hasqtip');
         };
@@ -85,8 +86,35 @@
           }
           return results;
         };
+        scope.api = function(e, id) {
+          var qtEl;
+          if (id == null) {
+            id = scope.getQtipId();
+          }
+          qtEl = $("#qtip-" + id);
+          return qtEl.qtip("api");
+        };
+        scope.isApiReady = function() {
+          return !!scope.getQtipElement().qtip().rendered;
+        };
+        scope.qtipApi = {
+          isReady: scope.isApiReady,
+          api: scope.api,
+          apiPromise: scope.apiPromise.promise
+        };
+        scope.resolveApiPromise = function(event, api) {
+          return scope.apiPromise.resolve(api);
+        };
+        scope._before = function(before, fn) {
+          return function() {
+            if (typeof before === "function") {
+              before.apply(null, arguments);
+            }
+            return typeof fn === "function" ? fn.apply(null, arguments) : void 0;
+          };
+        };
         generateQtip = function(content) {
-          var attrOptions, options, ref;
+          var attrOptions, options, ref, ref1;
           attrOptions = {
             position: {
               my: scope.qtipMy,
@@ -125,6 +153,14 @@
           removeEmpties(attrOptions);
           removeEmpties(scope.qtipOptions);
           options = angular.merge({}, qtipDefaults, attrOptions, scope.qtipOptions);
+          if (((ref1 = options.events) != null ? ref1.render : void 0) != null) {
+            options.events.render = scope._before(scope.resolveApiPromise, options.events.render);
+          } else {
+            if (options.events == null) {
+              options.events = {};
+            }
+            options.events.render = scope.resolveApiPromise;
+          }
           ($(el)).qtip(options);
           if (attrs.qtipVisible != null) {
             scope.$watch('qtipVisible', function(newVal) {
@@ -188,7 +224,7 @@
     };
   };
 
-  NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache', 'qtipDefaults'];
+  NgQtip2.$inject = ['$timeout', '$compile', '$http', '$templateCache', 'qtipDefaults', '$q'];
 
   angular.module('ngQtip2', []).directive('qtip', NgQtip2).provider('qtipDefaults', function() {
     this.defaults = {};
