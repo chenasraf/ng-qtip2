@@ -1,4 +1,7 @@
 # Changelog
+## 1.3.1
+- Added qTip API functionality (thanks to @idoa01)
+
 ## 1.3.0
 - Added ability to globally set defaults for qTip options
 - Overriding options using attributes now merges deeply instead of replaces
