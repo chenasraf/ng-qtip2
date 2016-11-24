@@ -1,4 +1,7 @@
 # Changelog
+## 1.3.2
+- Fixed `qtip-class` to update class via binding
+
 ## 1.3.1
 - Added qTip API functionality (thanks to @idoa01)
 

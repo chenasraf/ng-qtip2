@@ -123,6 +123,10 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
         scope.$watch 'qtipTitle', (newVal) ->
           ($ el).qtip 'option', 'content.title', newVal
 
+      if scope.qtipClass?
+        scope.$watch 'qtipClass', (cls) ->
+          ($ el).qtip 'option', 'style.class', cls
+
       scope.$watch 'qtip', (newVal, oldVal) ->
         ($ el).qtip 'option', 'content.text', newVal if newVal isnt oldVal
 

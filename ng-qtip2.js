@@ -177,6 +177,11 @@
               return ($(el)).qtip('option', 'content.title', newVal);
             });
           }
+          if (scope.qtipClass != null) {
+            scope.$watch('qtipClass', function(cls) {
+              return ($(el)).qtip('option', 'style.class', cls);
+            });
+          }
           return scope.$watch('qtip', function(newVal, oldVal) {
             if (newVal !== oldVal) {
               return ($(el)).qtip('option', 'content.text', newVal);
