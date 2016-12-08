@@ -1,3 +1,12 @@
+str2bool = (str) -> String(str).toLowerCase() not in ['false', '0', 'null', '']
+
+removeEmpties = (obj, deep = true) ->
+  for k, v of obj
+    if v? and typeof v is 'object' and deep
+      removeEmpties obj[k], deep
+    else if not v?
+      delete obj[k]
+
 NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
   restrict: 'A'
   scope:
@@ -30,17 +39,19 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
     object: '=qtipTemplateObject'
 
   link: (scope, el, attrs) ->
+    # these link attrs to qtip props (el.qtip(prop, val))
+    watchProps =
+      qtipVisible: 'toggle'
+      qtipDisable: 'disable'
+
+    # these link attrs to qtip options (el.qtip('option', name, val))
+    watchOptions =
+      qtipTitle: 'content.title'
+      qtipClass: 'style.classes'
+      qtip: 'content.text'
+
     scope.qtipOptions ?= {}
-
-    str2bool = (str) -> String(str).toLowerCase() not in ['false', '0', 'null', '']
-
     scope.apiPromise = $q.defer()
-
-    scope.getQtipId = ->
-      el.data('hasqtip')
-
-    scope.getQtipElement = (id = scope.getQtipId()) ->
-      ($ "#qtip-#{id}")
 
     scope.closeQtip = (e, id = scope.getQtipId(), {rendered = yes} = {}) ->
       e?.preventDefault?()
@@ -49,13 +60,14 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
       qtEl.qtip().rendered = scope.qtipPersistent ? rendered
       return
 
-    removeEmpties = (obj, deep = true) ->
-      for k, v of obj
-        if v? and typeof v is 'object' and deep
-          removeEmpties obj[k], deep
-        else if not v?
-          delete obj[k]
+    # Generic methods
+    scope.getQtipId = ->
+      el.data('hasqtip')
 
+    scope.getQtipElement = (id = scope.getQtipId()) ->
+      ($ "#qtip-#{id}")
+
+    # qTip API
     scope.api = (e, id = scope.getQtipId()) ->
       qtEl = ($ "#qtip-#{id}")
       return qtEl.qtip "api"
@@ -74,7 +86,9 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
       before?(arguments...)
       fn?(arguments...)
 
+    # Main init method
     generateQtip = (content) ->
+      # Default options
       attrOptions =
         position:
           my: scope.qtipMy
@@ -96,40 +110,36 @@ NgQtip2 = ($timeout, $compile, $http, $templateCache, qtipDefaults, $q) ->
           tip: scope.qtipTipStyle
         content: if content? then content else text: scope.qtipContent ? scope.qtip
 
+      # Clear empty values to use defaults
       angular.merge attrOptions.hide, scope.qtipHide if scope.qtipHide?
       angular.merge attrOptions.show, scope.qtipShow if scope.qtipShow?
       removeEmpties options
       removeEmpties attrOptions
       removeEmpties scope.qtipOptions
+
+      # Merge final opts
       options = angular.merge {}, qtipDefaults, attrOptions, scope.qtipOptions
 
+      # qTip API
       if options.events?.render?
         options.events.render = scope._before(scope.resolveApiPromise, options.events.render)
       else
         options.events ?= {}
         options.events.render = scope.resolveApiPromise
 
+      # Create qtip
       ($ el).qtip options
 
-      if attrs.qtipVisible?
-        scope.$watch 'qtipVisible', (newVal) ->
-          ($ el).qtip 'toggle', newVal
+      # Assign watch props/options pairs
+      for k, v of watchProps
+        scope.$watch k, (newVal) ->
+          el.qtip v, newVal
 
-      if attrs.qtipDisable?
-        scope.$watch 'qtipDisable', (newVal) ->
-          ($ el).qtip 'disable', newVal
+      for k, v of watchOptions
+        scope.$watch k, (newVal) ->
+          el.qtip 'option', v, newVal
 
-      if scope.qtipTitle?
-        scope.$watch 'qtipTitle', (newVal) ->
-          ($ el).qtip 'option', 'content.title', newVal
-
-      if scope.qtipClass?
-        scope.$watch 'qtipClass', (cls) ->
-          ($ el).qtip 'option', 'style.class', cls
-
-      scope.$watch 'qtip', (newVal, oldVal) ->
-        ($ el).qtip 'option', 'content.text', newVal if newVal isnt oldVal
-
+    # Switch for triggering init by different types of main content/position
     if attrs.qtipSelector
       $timeout ->
         generateQtip ($ scope.qtipSelector).html()
