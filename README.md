@@ -1,4 +1,7 @@
 # ng-qtip2
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b717aa5529c4798b3f13309ba713e25)](https://www.codacy.com/app/chenasraf/ng-qtip2?utm_source=github.com&utm_medium=referral&utm_content=chenasraf/ng-qtip2&utm_campaign=badger)
+
 qTip 2 directive for AngularJS.
 
 ## Features
