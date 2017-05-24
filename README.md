@@ -13,17 +13,25 @@ qTip 2 directive for AngularJS.
 ### Manually include
 
 1. Make sure the file is included in your HTML:  
-    <pre><code>&lt;script type="text/javascript" src="ng-qtip2.js"&gt;&lt;/script&gt;</code></pre>
+
+  ```html
+  <script type="text/javascript" src="ng-qtip2.js"></script>
+  ```
 2. Load the `ngQtip2` module in your `app.js`'s configuration
+  ```javascript
+  angular.module('myApp', ['ngQtip2'])
+  ```
 
 ### Using bower
 
 1. Install with bower
-
-        bower install ng-qtip2
+  ```sh
+  bower install ng-qtip2
+  ```
 2. Make sure the file is included in your HTML:
-
-        <script type="text/javascript" src="bower_components/ng-qtip2/ng-qtip2.js"></script>
+  ```html
+  <script type="text/javascript" src="bower_components/ng-qtip2/ng-qtip2.js"></script>
+  ```
 
 ### Overriding default options
 
@@ -35,120 +43,118 @@ Example config stage:
 angular.module('myApp', ['ngQtip2']).config(function(qtipDefaultsProvider) {
   qtipDefaultsProvider.setDefaults({
     position: {
-      adjust: {
-        x: 10,
-        y: 20
-      }
+      my: 'bottom center',
+      at: 'top center'
     }
   });
 });
 ```
 
 ## Available options
-`Interpolated` means you can assign expressions inside using `{{expression}}` format to create dynamic content.
-`Non-interpolated` are immediately evaluated as they are. For example, `qtip-visible` expects a `boolean` condition expression inside (e.g. `qtip-visible="title.length > 0"` or `qtip-visible="true"`).
 
 | Option | Type | Description |
 |---|---|---|
-| qtip | [required] [interpolated] [string] | The qTip content. This can be left blank and overridden with other properties such as `qtip-content`, `qtip-title`, `qtip-selector`, and `qtip-template`. |
-| qtip-content | [optional] [interpolated] [string] | The qTip content. Overrides `qtip`. |
-| qtip-title | [optional] [interpolated] [string] | When specified, puts the value in qTip's built-in title option. |
-| qtip-visible | [optional] [boolean] [default=false] | Whether the qTip is visible immediately. |
-| qtip-disable | [optional] [boolean] [default=false] | Whether the qTip is disabled completely. Useful with `ng-repeat` and conditions inside the repeater, for example. |
-| qtip-fixed | [optional] [boolean] [default=true] | Whether the qTip sticks around after the mouse leaves it (up until a certain `qtip-delay` is reached) |
-| qtip-delay | [optional] [string\|int] [default=100] | How long to wait before the qTip disappears after it becomes inactive when the `mouseleave` hide event is used (i.e, by default), in ms. |
-| qtip-adjust-x | [optional] [int] [default=0] | Position the qTip more to the left or right, relatively, in pixels. Use a negative value to move it left. |
-| qtip-adjust-y | [optional] [int] [default=0] | Position the qTip more to the top or bottom, relatively, in pixels. Use a negative value to move it up. |
-| qtip-show-effect | [optional] [boolean] [default=true] | If `false`, will disable animating the showing effect of qTip (this is useful when the dynamic positioning shows a flicker and animates the qTip from the side of the element or screen before positioning it correctly). |
-| qtip-hide-effect | [optional] [boolean] [default=true] | If `false`, will disable animating the hiding effect of qTip (this is useful when the dynamic positioning shows a flicker and animates the qTip from the side of the element or screen before positioning it correctly). |
-| qtip-modal-style | [optional] [object] [default={}] | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
-| qtip-tip-style | [optional] [object] [default={}] | Set inline style for the qTip's tip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`), and may also contain tip specific implementations (such as `mimic`, and `corner`). |
-| qtip-class | [optional] [string] [default=''] | Classes to use for the qTip, you can use these to style the qTip easier with CSS. |
-| qtip-selector | [optional] [string] [interpolated] | CSS selector for element to use. When specified, the element found using the selector and jQuery will override any other content specified. |
-| qtip-template | [optional] [string] [interpolated] | Remote template to use for qTip. When specified, the template will be used for the qTip content and will override any other content specified. Use in conjuction with `qtip-template-object` |
-| qtip-template-object | [optional] [anyObject] | Will assign a model to the qTip template for use inside the template's content. You can reference this using `{{object}}` inside the template. |
-| qtip-event | [optional] [string] [interpolated] [default=mouseover] | What event triggers the qTip to show up. |
-| qtip-event-out | [optional] [string] [interpolated] [default=mouseout] | What event triggers the qTip to hide after being shown. |
-| qtip-show | [optional] [object] | Object for the qtip 'show' option (see qTip docs). Will override `qtip-event` |
-| qtip-hide | [optional] [object] | Object for the qtip 'hide' option (see qTip docs). Will override `qtip-event-out` |
-| qtip-my | [optional] [string] [interpolated] [default=bottom center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
-| qtip-at | [optional] [string] [interpolated] [default=top center] | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
-| qtip-persistent | [optional] [boolean] [default=true] | If `false`, qTip will be re-rendered next time it is open. |
-| qtip-options | [optional] [object] | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, overriding any existing keys. This is to explicitly override any options that are not handled the way you expect within these options, or to use options that are not yet implemented. |
-| qtip-api | [optional] [object] | Pass an empty reference object to this attribute to get back an "api" object ([see below](#api-object) for api documentation) |
+| qtip | string (required) | The qTip content. This can be left blank and overridden with other properties such as `qtip-content`, `qtip-title`, `qtip-selector`, and `qtip-template`. |
+| qtip-content | string | The qTip content. Overrides `qtip`. |
+| qtip-title | string | When specified, puts the value in qTip's built-in title option. |
+| qtip-visible | boolean (default: false) | Whether the qTip is visible immediately. |
+| qtip-disable | boolean (default: false) | Whether the qTip is disabled completely. Useful with `ng-repeat` and conditions inside the repeater, for example. |
+| qtip-fixed | boolean (default: true) | Whether the qTip sticks around after the mouse leaves it (up until a certain `qtip-delay` is reached) |
+| qtip-delay | int (default: 100) | How long to wait before the qTip disappears after it becomes inactive when the `mouseleave` hide event is used (i.e, by default), in ms. |
+| qtip-adjust-x | int (default: 1) | Position the qTip more to the left or right, relatively, in pixels. Use a negative value to move it left. |
+| qtip-adjust-y | int (default: 1) | Position the qTip more to the top or bottom, relatively, in pixels. Use a negative value to move it up. |
+| qtip-show-effect | boolean (default: true) | If `false`, will disable animating the showing effect of qTip (this is useful when the dynamic positioning shows a flicker and animates the qTip from the side of the element or screen before positioning it correctly). |
+| qtip-hide-effect | boolean (default: true) | If `false`, will disable animating the hiding effect of qTip (this is useful when the dynamic positioning shows a flicker and animates the qTip from the side of the element or screen before positioning it correctly). |
+| qtip-modal-style | object | Set inline style for the qTip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`) |
+| qtip-tip-style | object | Set inline style for the qTip's tip. This should be a JS object that contains the JS-esque style properties (such as `maxHeight: '100vh'`), and may also contain tip specific implementations (such as `mimic`, and `corner`). |
+| qtip-class | string | Classes to use for the qTip, you can use these to style the qTip easier with CSS. |
+| qtip-selector | string | CSS selector for element to use. When specified, the element found using the selector and jQuery will override any other content specified. |
+| qtip-template | string | Remote template to use for qTip. When specified, the template will be used for the qTip content and will override any other content specified. Use in conjuction with `qtip-template-object` |
+| qtip-template-object | object | Will assign a model to the qTip template for use inside the template's content. You can reference this using `{{object}}` inside the template. |
+| qtip-event | string (default: mouseover) | What event triggers the qTip to show up. |
+| qtip-event-out | string (default: mouseout) | What event triggers the qTip to hide after being shown. |
+| qtip-show | object | Object for the qtip 'show' option (see qTip docs). Will override `qtip-event` |
+| qtip-hide | object | Object for the qtip 'hide' option (see qTip docs). Will override `qtip-event-out` |
+| qtip-my | string (default: bottom center) | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
+| qtip-at | string (default: top center) | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
+| qtip-persistent | boolean (default: true) | If `false`, qTip will be re-rendered next time it is open. |
+| qtip-options | object | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, overriding any existing keys. This is to explicitly override any options that are not handled the way you expect within these options, or to use options that are not yet implemented. |
+| qtip-api | object | An empty object to hold the API reference object.  [See below](#api-object) for api documentation |
 
 ## API Object
-access the api by adding a scope object to `qtip-api`
+Access the api by adding a scope object to `qtip-api`
 
 ```html
 <span qtip="Hi!" qtip-api="tip"></span>
 ```
 
-and then access it in your code:
+And then access it in your code:
 
 ```js
 $scope.tip.api().get("position.my")
 ```
 
-Because of the way qtip2 works, ***the api won't be available until you first render it***.
-This means that it won't be ready until the user showed it (hovered on the associated directive)
-or you've passed to the options `{prerender: true}` which will force qtip2 to render the qtip on page load.
+Because of the way qtip2 works, *the API will not be available until you first render it*.
+This means that it won't be ready until the user showed it (hovered on the associated directive), or you've passed to the options `qtip-options="{prerender: true}"` which will force qtip2 to render the qtip on page load.
 
-the `qtip-api` object has 3 methods:
+#### ngQtip API methods
 
-* **isReady()**
-
-  Returns true/false
-  because of the way qtip2 works, the api won't be available until you first render it.
-  isReady() will tell you if the api object is ready for use
-
-* **api()**
-
-  Returns a qtip2 api object
-  for a full documentation about the api object, see: http://qtip2.com/api
-
-* **apiPromise()**
-
-  Returns a `$q` promise holding the api object upon resolve
-  example:
-  ```js
-  $scope.tip.apiPromise().then(function(api) {
-    console.log(api.get("content"));
-  });
-  ```
+| Name | Description | Returns |
+|---|---|---|
+| isReady() | Returns true if the API object is ready for use, false otherwise | boolean |
+| api() | Returns a qTip2 API object[^qtip-docs]. | object |
+| apiPromise() | Returns a `$q` promise holding the api object upon resolve. [See example below](#api-promise) | object |
 
 ## Examples
 #### 1. Regular qTip
 
-    <span qtip="Hi there, {{name}}!">{{name}}</span>
+  ```html
+  <span qtip="Hi there, {{name}}!">{{name}}</span>
+  ```
 
 #### 2. Immediately visible qTip
 
-    <span qtip="Woah!" qtip-visible="true">Keanu</span>
+  ```html
+  <span qtip="Woah!" qtip-visible="true">Keanu</span>
+  ```
 
 #### 3. qTip from template, with multiple objects
 
-    <span qtip qtip-template="my_remote_template.html"
-          qtip-template-object="{person: myPerson, callback: myCallback}">
-        {{person.name}}
-    </span>
+  ```html
+  <span qtip qtip-template="my_remote_template.html"
+        qtip-template-object="{person: myPerson, callback: myCallback}">
+      {{person.name}}
+  </span>
+  ```
 
 ##### my_remote_template.html
 
-    <span ng-click="object.callback(person)">
-        Hi {{object.person.name}}, you are {{object.person.age | pluralize:'year'}} old!
-    </span>
+  ```html
+  <span ng-click="object.callback(person)">
+      Hi {{object.person.name}}, you are {{object.person.age | pluralize:'year'}} old!
+  </span>
+  ```
 
 #### 4. Dynamic qTip position
 
-    <ul>
-        <li ng-repeat="person in people track by $index"
-            qtip="{{$index}}"
-            qtip-my="{{getQtipMy($index)}}"
-            qtip-at="top {{$index > 15 ? 'center' : 'bottom'}}">
-            {{person.name}}
-        </li>
-    </ul>
+  ```html
+  <ul>
+      <li ng-repeat="person in people track by $index"
+          qtip="{{$index}}"
+          qtip-my="{{getQtipMy($index)}}"
+          qtip-at="top {{$index > 15 ? 'center' : 'bottom'}}">
+          {{person.name}}
+      </li>
+  </ul>
+  ```
+    
+#### 5. API Promise
+
+    ```js
+    $scope.tip.apiPromise().then(function(api) {
+      console.log(api.get("content"));
+    });
+    ```
 
 ## Contributing
 
@@ -158,3 +164,5 @@ the `qtip-api` object has 3 methods:
 1. To auto-compile JS from Coffee, copy `pre-commit.hook` to `.git/hooks`
 1. Commit & Push to your fork (auto-compile should do its magic during commit)
 1. Create a pull request
+
+[qtip-docs]: http://qtip2.com/api
