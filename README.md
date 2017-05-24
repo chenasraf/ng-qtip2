@@ -100,7 +100,7 @@ This means that it won't be ready until the user showed it (hovered on the assoc
 | Name | Description | Returns |
 |---|---|---|
 | isReady() | Returns true if the API object is ready for use, false otherwise | boolean |
-| api() | Returns a qTip2 [API object][qtip-docs]. | object |
+| api() | Returns a qTip2 API object. [See official documentation][qtip-docs]. | object |
 | apiPromise() | Returns a `$q` promise holding the api object upon resolve. [See example below](#5-api-promise) | object |
 
 ## Examples
