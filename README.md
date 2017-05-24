@@ -54,7 +54,7 @@ angular.module('myApp', ['ngQtip2']).config(function(qtipDefaultsProvider) {
 |---|---|---|---|
 | qtip | string (required | | The qTip content. This can be left blank and overridden with other properties such as `qtip-content`, `qtip-title`, `qtip-selector`, and `qtip-template`. |
 | qtip-content | string | | The qTip content. Overrides `qtip`. |
-| qtip-title | string | When specified, puts the value in qTip's built-in title option. |
+| qtip-title | string | | When specified, puts the value in qTip's built-in title option. |
 | qtip-visible | boolean | false | Whether the qTip is visible immediately. |
 | qtip-disable | boolean | false | Whether the qTip is disabled completely. Useful with `ng-repeat` and conditions inside the repeater, for example. |
 | qtip-fixed | boolean | true | Whether the qTip sticks around after the mouse leaves it (up until a certain `qtip-delay` is reached |
