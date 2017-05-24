@@ -52,7 +52,7 @@ angular.module('myApp', ['ngQtip2']).config(function(qtipDefaultsProvider) {
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| qtip | string (required | | The qTip content. This can be left blank and overridden with other properties such as `qtip-content`, `qtip-title`, `qtip-selector`, and `qtip-template`. |
+| qtip | string (required) | | The qTip content. This can be left blank and overridden with other properties such as `qtip-content`, `qtip-title`, `qtip-selector`, and `qtip-template`. |
 | qtip-content | string | | The qTip content. Overrides `qtip`. |
 | qtip-title | string | | When specified, puts the value in qTip's built-in title option. |
 | qtip-visible | boolean | false | Whether the qTip is visible immediately. |
