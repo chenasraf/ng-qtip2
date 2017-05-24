@@ -1,8 +1,6 @@
 # ng-qtip2
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b717aa5529c4798b3f13309ba713e25)](https://www.codacy.com/app/chenasraf/ng-qtip2?utm_source=github.com&utm_medium=referral&utm_content=chenasraf/ng-qtip2&utm_campaign=badger)
-
-qTip 2 directive for AngularJS.
+qTip 2 wrapper directive for AngularJS.
 
 ## Features
 * Two way bind support for content and title
@@ -50,7 +48,7 @@ angular.module('myApp', ['ngQtip2']).config(function(qtipDefaultsProvider) {
 });
 ```
 
-## Available options
+## Reference
 
 | Option | Type | Description |
 |---|---|---|
@@ -79,10 +77,10 @@ angular.module('myApp', ['ngQtip2']).config(function(qtipDefaultsProvider) {
 | qtip-at | string (default: top center) | qTip bubble tip position relative to the qTip. "Put **my** tip **at** the qTip's..." |
 | qtip-persistent | boolean (default: true) | If `false`, qTip will be re-rendered next time it is open. |
 | qtip-options | object | Object for the entire qtip initializer. This will merge itself into the other options specified in this table, overriding any existing keys. This is to explicitly override any options that are not handled the way you expect within these options, or to use options that are not yet implemented. |
-| qtip-api | object | An empty object to hold the API reference object.  [See below](#api-object) for api documentation |
+| qtip-api | object | An empty object to hold the API reference object. [See reference below](#api-object) |
 
-## API Object
-Access the api by adding a scope object to `qtip-api`
+### API Object
+Access the api by adding a scope object to `qtip-api`:
 
 ```html
 <span qtip="Hi!" qtip-api="tip"></span>
@@ -102,8 +100,8 @@ This means that it won't be ready until the user showed it (hovered on the assoc
 | Name | Description | Returns |
 |---|---|---|
 | isReady() | Returns true if the API object is ready for use, false otherwise | boolean |
-| api() | Returns a qTip2 API object[^qtip-docs]. | object |
-| apiPromise() | Returns a `$q` promise holding the api object upon resolve. [See example below](#api-promise) | object |
+| api() | Returns a qTip2 [API object][qtip-docs]. | object |
+| apiPromise() | Returns a `$q` promise holding the api object upon resolve. [See example below](#5-api-promise) | object |
 
 ## Examples
 #### 1. Regular qTip
@@ -150,11 +148,11 @@ This means that it won't be ready until the user showed it (hovered on the assoc
     
 #### 5. API Promise
 
-    ```js
-    $scope.tip.apiPromise().then(function(api) {
-      console.log(api.get("content"));
-    });
-    ```
+  ```js
+  $scope.tip.apiPromise().then(function(api) {
+    console.log(api.get("content"));
+  });
+  ```
 
 ## Contributing
 
